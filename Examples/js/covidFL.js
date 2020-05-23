@@ -55,15 +55,15 @@
         }, {
             id: "case1",
             alias: "case1",
-            dataType: tableau.dataTypeEnum.date
+            dataType: tableau.dataTypeEnum.datetime
         }, {
             id: "eventDate",
             alias: "eventDate",
-            dataType: tableau.dataTypeEnum.date
+            dataType: tableau.dataTypeEnum.datetime
         }, {
             id: "chartDate",
             alias: "chartDate",
-            dataType: tableau.dataTypeEnum.date
+            dataType: tableau.dataTypeEnum.datetime
         }, {
             id: "id",
             alias: "id",
