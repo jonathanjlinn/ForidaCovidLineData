@@ -11,7 +11,7 @@
         }, {
             id: "age",
             alias: "age",
-            dataType: tableau.dataTypeEnum.float
+            dataType: tableau.dataTypeEnum.int
         }, {
             id: "age_group",
             alias: "age_group",
@@ -67,7 +67,7 @@
         }, {
             id: "id",
             alias: "id",
-            dataType: tableau.dataTypeEnum.string
+            dataType: tableau.dataTypeEnum.int
         }];
 
         var tableInfo = {
@@ -117,9 +117,9 @@
                 died = feat[i].attributes.Died;
                 case_ = feat[i].attributes.Case_;
                 contact = feat[i].attributes.Contact;
-                case1 = feat[i].attributes.Case1;
-                eventDate = feat[i].attributes.EventDate;
-                chartDate = feat[i].attributes.ChartDate;
+                case1 = new Date(feat[i].attributes.Case1);
+                eventDate = new Date(feat[i].attributes.EventDate);
+                chartDate = new Date(feat[i].attributes.ChartDate);
                 id = feat[i].attributes.ObjectId;
                 
 
