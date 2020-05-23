@@ -82,7 +82,7 @@
     // Download the data
     myConnector.getData = function(table, doneCallback) {
         
-        var maxVal = 100000;
+        var maxVal = 10000;
         var incrementalVal = 2000;
         var lowerBound = 0;
         var upperBound = 2000;
@@ -159,8 +159,8 @@
                 
                 },
             });
-            doneCallback();
-        }};
+            
+        }doneCallback();};
 
     tableau.registerConnector(myConnector);
 
