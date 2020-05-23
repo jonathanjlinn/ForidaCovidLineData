@@ -81,6 +81,12 @@
 
     // Download the data
     myConnector.getData = function(table, doneCallback) {
+        
+        var maxVal = 100000;
+        var incrementalVal = 2000;
+        var lowerBound = 0;
+        var upperBound = 2000;
+        
         var county ="",
             age = 0,
             age_group = "",
@@ -97,57 +103,64 @@
             eventDate = "",
             chartDate = "",
             id = "";
-        
-
-        $.getJSON("https://services1.arcgis.com/CY1LXxl9zlJeBuRZ/arcgis/rest/services/Florida_COVID19_Case_Line_Data_NEW/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json", function(resp) {
-            var feat = resp.features,
-                tableData = [];
-
-            // Iterate over the JSON object
-            for (var i = 0, len = feat.length; i < len; i++) {
-                county = feat[i].attributes.County;
-                age = feat[i].attributes.Age;
-                age_group = feat[i].attributes.Age_group;
-                gender = feat[i].attributes.Gender;
-                jurisdiction = feat[i].attributes.Jurisdiction;
-                travel_related = feat[i].attributes.Travel_related;
-                origin = feat[i].attributes.Origin;
-                edvisit = feat[i].attributes.EDvisit;
-                hospitalized = feat[i].attributes.Hospitalized;
-                died = feat[i].attributes.Died;
-                case_ = feat[i].attributes.Case_;
-                contact = feat[i].attributes.Contact;
-                case1 = new Date(feat[i].attributes.Case1);
-                eventDate = new Date(feat[i].attributes.EventDate);
-                chartDate = new Date(feat[i].attributes.ChartDate);
-                id = feat[i].attributes.ObjectId;
+    
+        for(var j = upperBound; j <= maxVal; j+= incrementalVal ) {
+            $.ajax({
+                dataType: "json",
+                url: "https://services1.arcgis.com/CY1LXxl9zlJeBuRZ/arcgis/rest/services/Florida_COVID19_Case_Line_Data_NEW/FeatureServer/0/query?where=objectid>" + (j-incrementalVal) + "&objectid<=" + j + "&outFields=*&outSR=4326&f=json",
+                async: false,
+                success: function (resp) {
+                    var feat = resp.features,
+                        tableData = [];
                 
-
-                tableData.push({
-                    "county": county,
-                    "age": age,
-                    "age_group": age_group,
-                    "gender": gender,
-                    "jurisdiction": jurisdiction,
-                    "travel_related": travel_related,
-                    "origin" : origin,
-                    "edvisit" : edvisit,
-                    "hospitalized" : hospitalized,
-                    "died" : died,
-                    "case_" : case_,
-                    "contact" : contact,
-                    "case1" : case1,
-                    "eventDate" : eventDate,
-                    "chartDate" : chartDate,
-                    "id" : id
-                });
-
-            }
-
-            table.appendRows(tableData);
+                    // Iterate over the JSON object
+                    for (var i = 0, len = feat.length; i < len; i++) {
+                        county = feat[i].attributes.County;
+                        age = feat[i].attributes.Age;
+                        age_group = feat[i].attributes.Age_group;
+                        gender = feat[i].attributes.Gender;
+                        jurisdiction = feat[i].attributes.Jurisdiction;
+                        travel_related = feat[i].attributes.Travel_related;
+                        origin = feat[i].attributes.Origin;
+                        edvisit = feat[i].attributes.EDvisit;
+                        hospitalized = feat[i].attributes.Hospitalized;
+                        died = feat[i].attributes.Died;
+                        case_ = feat[i].attributes.Case_;
+                        contact = feat[i].attributes.Contact;
+                        case1 = new Date(feat[i].attributes.Case1);
+                        eventDate = new Date(feat[i].attributes.EventDate);
+                        chartDate = new Date(feat[i].attributes.ChartDate);
+                        id = feat[i].attributes.ObjectId;
+                    
+                    
+                        tableData.push({
+                            "county": county,
+                            "age": age,
+                            "age_group": age_group,
+                            "gender": gender,
+                            "jurisdiction": jurisdiction,
+                            "travel_related": travel_related,
+                            "origin": origin,
+                            "edvisit": edvisit,
+                            "hospitalized": hospitalized,
+                            "died": died,
+                            "case_": case_,
+                            "contact": contact,
+                            "case1": case1,
+                            "eventDate": eventDate,
+                            "chartDate": chartDate,
+                            "id": id
+                        });
+                    
+                    }
+                
+                
+                    table.appendRows(tableData);
+                
+                },
+            });
             doneCallback();
-        });
-    };
+        }};
 
     tableau.registerConnector(myConnector);
 
