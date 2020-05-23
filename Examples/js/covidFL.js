@@ -108,7 +108,7 @@
             $.ajax({
                 dataType: "json",
                 url: "https://services1.arcgis.com/CY1LXxl9zlJeBuRZ/arcgis/rest/services/Florida_COVID19_Case_Line_Data_NEW/FeatureServer/0/query?where=objectid>" + (j-incrementalVal) + "&objectid<=" + j + "&outFields=*&outSR=4326&f=json",
-                async: false,
+                async: true,
                 success: function (resp) {
                     var feat = resp.features,
                         tableData = [];
