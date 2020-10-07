@@ -82,7 +82,7 @@
     // Download the data
     myConnector.getData = function(table, doneCallback) {
         
-        var maxVal = 650000;
+        var maxVal = 900000;
         var incrementalVal = 2000;
         var lowerBound = 0;
         var upperBound = 2000;
